@@ -21,19 +21,20 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_id")
+    @Column(nullable = false)
     private long id;
 
-    @Column(name = "project_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "project_client_id", referencedColumnName = "client_id")
+    @JoinColumn(name = "project_client_id", referencedColumnName = "client_id", nullable = false)
     private Client client;
 
     @Column(nullable = false)
     private String projectManager;
     private String email;
+    @Column(nullable = true)
     private int contactNumber;
     @Column(nullable = false)
     private String billingAddress;
