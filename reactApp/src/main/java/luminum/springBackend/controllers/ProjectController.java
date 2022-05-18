@@ -27,12 +27,12 @@ public class ProjectController {
 
     @GetMapping("/projects")
     List<ProjectReadDTO> all() {
-        return projectRepository.findAll().stream().map(x -> getProjectReadDTO(x)).collect(Collectors.toList());
+        return projectRepository.findAll().stream().map(this::getProjectReadDTO).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
-    Project single(@PathVariable("id") Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
+    ProjectReadDTO single(@PathVariable("id") Long id) {
+        return getProjectReadDTO(projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id)));
     }
 
     @PostMapping("/projects")
