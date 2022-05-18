@@ -21,6 +21,9 @@ and in App.js
 > fetch('clients');
 
 The data retriaval does not work.
-When it is set up as the bellow it works:
+When it is set up as the bellow it works
+Package.json
 > "proxy": "http://localhost:8080",
+
+App.js
 > fetch('api/clients');
