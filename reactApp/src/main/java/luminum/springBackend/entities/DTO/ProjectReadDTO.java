@@ -1,0 +1,78 @@
+package luminum.springBackend.entities.DTO;
+
+public class ProjectReadDTO {
+
+    public ProjectReadDTO(long id, String name, String clientName, String projectManager, String email, Integer contactNumber, String billingAddress) {
+        this.id = id;
+        this.name = name;
+        this.clientName = clientName;
+        this.projectManager = projectManager;
+        this.email = email;
+        this.contactNumber = contactNumber;
+        this.billingAddress = billingAddress;
+    }
+
+    public long id;
+    public String name;
+    public String clientName;
+    public String projectManager;
+    public String email;
+    public Integer contactNumber;
+    public String billingAddress;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(String projectManager) {
+        this.projectManager = projectManager;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(Integer contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+}

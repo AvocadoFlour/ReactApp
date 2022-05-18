@@ -1,6 +1,7 @@
 insert into clients(name, country, city, street_name, street_Number, zip) values('Ivan Horvat', 'Hrvatska', 'Zagreb', 'Lastovka', 14, 10000);
 insert into clients(name, country, city, street_name, street_number, zip) values('Michael Peterson', 'Australija', 'Sydney', 'Victory Lane', 24, 53345);
 insert into clients(name, country, city, street_name, street_number, zip) values('Quoc Nguyen', 'Vietnam', 'Hanoi', 'Nguyen Street', 779, 677777);
+insert into clients(name, country, city, street_name, street_number, zip) values('Unrelated Fellow', 'Nope', 'Neverland', 'Lonely Ave', 000, 000000);
 
 insert into projects(name, project_client_id, project_Manager, email, contact_number, billing_address) values ('Technalasys', 3, 'Markec', null, null, 'Malsitec 2');
 insert into projects(name, project_client_id, project_Manager, email, contact_number, billing_address) values ('Makoto', 3, 'Tomislav', 'test@email.com', null, 'kfgkajfkas');
