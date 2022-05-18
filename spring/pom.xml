@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>luminum</groupId>
-	<artifactId>reactApp</artifactId>
+	<artifactId>springBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reactApp</name>
+	<name>reactApp2</name>
 	<description>Demo project for Luminum</description>
 	<properties>
 		<java.version>18</java.version>

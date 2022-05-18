@@ -23,7 +23,7 @@ this.setState({clients: body});
           <h2>Clients</h2>
           {clients.map(client =>
               <div key={client.id}>
-                {client.name} ({client.country})
+                {client.name} ({client.country}) ({client.city}) ({client.streetName}) ({client.streetNumber}) ({client.zip})
               </div>
           )}
         </div>

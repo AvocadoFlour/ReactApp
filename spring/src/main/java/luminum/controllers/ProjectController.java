@@ -1,16 +1,16 @@
-package luminum.springBackend.controllers;
+package luminum.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import luminum.springBackend.database.ClientRepository;
-import luminum.springBackend.database.ProjectRepository;
-import luminum.springBackend.entities.Client;
-import luminum.springBackend.entities.DTO.ProjectReadDTO;
-import luminum.springBackend.entities.DTO.ProjectUpdateDTO;
-import luminum.springBackend.entities.Project;
-import luminum.springBackend.exceptions.ClientNotFoundException;
-import luminum.springBackend.exceptions.ProjectNotFoundException;
+import luminum.database.ClientRepository;
+import luminum.database.ProjectRepository;
+import luminum.entities.Client;
+import luminum.entities.DTO.ProjectReadDTO;
+import luminum.entities.DTO.ProjectUpdateDTO;
+import luminum.entities.Project;
+import luminum.exceptions.ClientNotFoundException;
+import luminum.exceptions.ProjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

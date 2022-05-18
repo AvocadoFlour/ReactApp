@@ -1,4 +1,4 @@
-package luminum.springBackend.exceptions;
+package luminum.exceptions;
 
 public class ClientNotFoundException extends RuntimeException {
     public ClientNotFoundException(Long id) {

@@ -1,4 +1,4 @@
-package luminum.springBackend.entities;
+package luminum.entities;
 
 
 import javax.persistence.*;

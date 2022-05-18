@@ -1,4 +1,4 @@
-package luminum.springBackend.entities.DTO;
+package luminum.entities.DTO;
 
 public class ProjectUpdateDTO {
 

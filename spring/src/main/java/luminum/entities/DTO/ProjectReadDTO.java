@@ -1,43 +1,24 @@
-package luminum.springBackend.entities;
+package luminum.entities.DTO;
 
-import javax.persistence.*;
+public class ProjectReadDTO {
 
-@Entity
-@Table(name = "projects")
-public class Project {
-
-    public Project() {
-    }
-
-    public Project(long id, String name, Client client, String projectManager, String email, Integer contactNumber, String billingAddress) {
+    public ProjectReadDTO(long id, String name, String clientName, String projectManager, String email, Integer contactNumber, String billingAddress) {
         this.id = id;
         this.name = name;
-        this.client = client;
+        this.clientName = clientName;
         this.projectManager = projectManager;
         this.email = email;
         this.contactNumber = contactNumber;
         this.billingAddress = billingAddress;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private long id;
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "project_client_id", referencedColumnName = "client_id", nullable = false)
-    private Client client;
-
-    @Column(nullable = false)
-    private String projectManager;
-    private String email;
-    @Column(nullable = true)
-    private Integer contactNumber;
-    @Column(nullable = false)
-    private String billingAddress;
+    public long id;
+    public String name;
+    public String clientName;
+    public String projectManager;
+    public String email;
+    public Integer contactNumber;
+    public String billingAddress;
 
     public long getId() {
         return id;
@@ -55,12 +36,12 @@ public class Project {
         this.name = name;
     }
 
-    public Client getClient() {
-        return client;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setClientId(Client clientId) {
-        this.client = clientId;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
     public String getProjectManager() {

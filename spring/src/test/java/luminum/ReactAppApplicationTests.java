@@ -1,4 +1,4 @@
-package luminum.springBackend;
+package luminum;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/reactApp/reactApp.iml" filepath="$PROJECT_DIR$/reactApp/reactApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/reactApp2.iml" filepath="$PROJECT_DIR$/.idea/reactApp2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring/springBackend.iml" filepath="$PROJECT_DIR$/spring/springBackend.iml" />
     </modules>
   </component>
 </project>
