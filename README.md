@@ -6,7 +6,9 @@ Implemented Swagger endpoint overview using [this guide](https://www.baeldung.co
 
 Database console
 > http://localhost:8080/h2-console/
+> 
 > User: luminum
+> 
 > Pass: lustrous
 
 Helpful endpoint defaults
