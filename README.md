@@ -13,3 +13,14 @@ Database console
 
 Helpful endpoint defaults
 > https://spring.io/guides/tutorials/rest/
+
+When setting up the React app, for some reason setting it up inside of package.json with a proxy such as:
+> "proxy": "http://localhost:8080/api",
+ 
+and in App.js
+> fetch('clients');
+
+The data retriaval does not work.
+When it is set up as the bellow it works:
+> "proxy": "http://localhost:8080",
+> fetch('api/clients');
