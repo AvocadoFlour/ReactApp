@@ -27,6 +27,7 @@ public class ProjectController {
 
     @GetMapping("/projects")
     List<ProjectReadDTO> all() {
+        System.out.println("GetAllProjectsEndpointCalled");
         return projectRepository.findAll().stream().map(this::getProjectReadDTO).collect(Collectors.toList());
     }
 
@@ -43,6 +44,7 @@ public class ProjectController {
 
     @PatchMapping("/projects")
     Project update(@RequestBody ProjectUpdateDTO projectUpdateDTO) {
+        System.out.println("UpdateProjectsEndpointCalled");
         Project project = getProjectFromProjectUpdateDTO(projectUpdateDTO);
         return projectRepository.save(project);
     }

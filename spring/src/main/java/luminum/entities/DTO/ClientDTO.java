@@ -75,5 +75,18 @@ public class ClientDTO {
     public void setZip(int zip) {
         this.zip = zip;
     }
+
+    @Override
+    public String toString() {
+        return "ClientDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", streetNumber=" + streetNumber +
+                ", zip=" + zip +
+                '}';
+    }
 }
 

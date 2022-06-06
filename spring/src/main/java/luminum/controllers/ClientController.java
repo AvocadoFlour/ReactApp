@@ -22,22 +22,27 @@ public class ClientController {
 
     @GetMapping()
     List<ClientDTO> all() {
+        System.out.println("GetAllClientsEndpointCalled");
         return repository.findAll().stream().map(x -> getClientDTO(x)).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     ClientDTO single(@PathVariable("id") Long id) {
+        System.out.println("GetASingleClientEndpointCalled");
         return getClientDTO(repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id)));
     }
 
     @PostMapping()
     ClientDTO create(@RequestBody ClientDTO newClientDTO) {
+        System.out.println("Post(create)ClientsEndpointCalled");
         Client newClient = getClientFromDTO(newClientDTO);
         return getClientDTO(repository.save(newClient));
     }
 
     @PatchMapping()
     ClientDTO update(@RequestBody ClientDTO clientDTO) {
+        System.out.println("UpdateClientsEndpointCalled");
+        System.out.println(clientDTO.toString());
         Client client = getClientFromDTO(clientDTO);
         return getClientDTO(repository.save(client));
     }
@@ -45,6 +50,7 @@ public class ClientController {
     //delete DELETE
     @DeleteMapping("/{id}")
     ResponseEntity delete(@PathVariable("id") Long id) {
+        System.out.println("DeleteClientsEndpointCalled");
         repository.deleteById(id);
         return ResponseEntity.ok().build();
     }
