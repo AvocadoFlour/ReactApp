@@ -1,158 +1,11 @@
 import React, { Component, useState } from 'react';
-import './index.css';
+import { ClientTableRow, CreateClientForm, FetchClients } from './Clients/Clients.js';
+import { ProjectTableRow, CreateProjectForm, FetchProjects } from './Projects/Projects.js';
 
-const API_URL = 'api/clients'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ClientTableRowDetailsOverview(props) {
-  return (
-    <>
-      <td>{props.client.name}</td>
-      <td>{props.client.country}</td>
-      <td>{props.client.city}</td>
-      <td>{props.client.streetName}</td>
-      <td>{props.client.streetNumber}</td>
-      <td>{props.client.zip}</td>
-      <td>
-        <button className="btn btn-primary" type='button' onClick={() => props.onClick(props.client)}>
-          Update
-        </button>
-      </td>
-    </>
-  )
-}
-
-function ClientTableRowDetailsUpdate(props) {
-
-  const [editedClientName, setEditedClientName] = useState(props.client.name);
-  const [editedClientCountry, setEditedClientCountry] = useState(props.client.country);
-  const [editedClientCity, setEditedClientCity] = useState(props.client.city);
-  const [editedClientStreetName, setEditedClientStreetName] = useState(props.client.streetName);
-  const [editedClientStreetNumber, setEditedClientStreetNumber] = useState(props.client.streetNumber);
-  const [editedClientZip, setEditedClientZip] = useState(props.client.zip);
-
-  return (
-    <>
-      <td>
-        <input placeholder="Name"
-          defaultValue={editedClientName}
-          onChange={(e) => setEditedClientName(e.target.value)}
-          name="editedClientName" />
-      </td>
-      <td>
-        <input
-          placeholder="Country"
-          defaultValue={editedClientCountry}
-          onChange={(e) => setEditedClientCountry(e.target.value)}
-          name="editedClientCountry" />
-      </td>
-      <td>
-        <input
-          placeholder="City"
-          defaultValue={editedClientCity}
-          onChange={(e) => setEditedClientCity(e.target.value)}
-          name="editedClientCity" />
-      </td>
-      <td>
-        <input placeholder="Street name"
-          defaultValue={editedClientStreetName}
-          onChange={(e) => setEditedClientStreetName(e.target.value)}
-          name="editedClientStreetName" />
-      </td>
-      <td>
-        <input placeholder="Street number"
-          defaultValue={editedClientStreetNumber}
-          onChange={(e) => setEditedClientStreetNumber(e.target.value)}
-          name="editedClientStreetNumber" />
-      </td>
-      <td>
-        <input
-          placeholder="Zip"
-          defaultValue={editedClientZip}
-          onChange={(e) => setEditedClientZip(e.target.value)}
-          name="editedClientZip" />
-      </td>
-      <td>
-        <button className="btn btn-warning" type='button' onClick={() => props.onClick({
-          id: props.client.id,
-          name: editedClientName,
-          country: editedClientCountry,
-          city: editedClientCity,
-          streetName: editedClientStreetName,
-          streetNumber: editedClientStreetNumber,
-          zip: editedClientZip
-        })}>
-          Save
-        </button>
-      </td>
-    </>
-  )
-}
-
-function ClientTableRow(props) {
-
-  let isRowBeingEdited = props.aClientIsEdited && props.editedClientId === props.client.id;
-
-  return (
-    <>
-      {isRowBeingEdited ?
-        <ClientTableRowDetailsUpdate client={props.client} onClick={(e) => props.updateAction(e)} /> :
-        <ClientTableRowDetailsOverview client={props.client} onClick={(e) => props.updateAction(e)} />
-      }
-
-      <td>
-        <button className="btn btn-primary" type='button' onClick={() => props.deleteAction(props.client.id)}>
-          Delete
-        </button>
-      </td>
-    </>
-  );
-}
-
-function CreateClientForm(props) {
-  return (
-    <form onSubmit={() => props.onSubmit()}>
-      <input
-        placeholder="Name"
-        name="clientName"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <input
-        placeholder="Country"
-        name="clientCountry"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <input
-        placeholder="City"
-        name="clientCity"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <input
-        placeholder="Street name"
-        name="clientStreetName"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <input
-        placeholder="Street number"
-        name="clientStreetNumber"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <input
-        placeholder="Zip"
-        name="clientZip"
-        required="required"
-        onChange={(e) => props.onChange(e)}
-      />
-      <button type="submit">
-        Add
-      </button>
-    </form>
-  )
-}
+const CLIENTS_API_URL = 'api/clients'
+const PROJECTS_API_URL = 'api/projects'
 
 class App extends React.Component {
 
@@ -163,27 +16,24 @@ class App extends React.Component {
       isLoaded: false,
       clients: [],
       aClientIsEdited: false,
-      editedClientId: null
+      editedClientId: null,
+      projects: [],
+      aProjectIsEdited: false,
+      editedProjectId: null,
     };
   }
 
   async componentDidMount() {
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            clients: result,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+
+    this.setState({
+      clients: await FetchClients()
+    });
+
+    this.setState({
+      projects: await FetchProjects(),
+      isLoaded: true,
+    });
+
   }
 
   handleFieldChange(e) {
@@ -195,7 +45,7 @@ class App extends React.Component {
   }
 
   create() {
-    fetch(API_URL, {
+    fetch(CLIENTS_API_URL, {
       "method": "POST",
       "headers": {
         "content-type": "application/json"
@@ -211,7 +61,7 @@ class App extends React.Component {
     });
   }
 
-  update(client) {
+  async update(client) {
     if (this.state.aClientIsEdited) {
       this.setState(
         {
@@ -219,7 +69,17 @@ class App extends React.Component {
           editedClientId: null,
         }
       );
-      fetch(API_URL, {
+
+      // updating the array from which clients are rendered
+      const newClients = [...this.state.clients]
+      const updatedClientIndex = this.state.clients.findIndex((c) => c.id === client.id);
+      newClients[updatedClientIndex] = client;
+      this.setState({
+        clients: newClients,
+      });
+
+      // API update
+      fetch(CLIENTS_API_URL, {
         "method": "PATCH",
         "headers": {
           "content-type": "application/json"
@@ -233,7 +93,9 @@ class App extends React.Component {
           streetNumber: client.streetNumber,
           zip: client.zip
         })
-      });
+      }).then((r) => r.json())
+        .then((result) =>
+          alert(JSON.stringify(result)));
     } else {
       this.setState(
         {
@@ -245,40 +107,159 @@ class App extends React.Component {
 
   }
 
+  async updateProject(project) {
+    if (this.state.aProjectIsEdited) {
+      this.setState(
+        {
+          aProjectIsEdited: false,
+          editedProjectId: null,
+        }
+      );
+
+      // updating the array from which project are rendered
+      const newProjects = [...this.state.projects]
+      const updatedProjectIndex = this.state.projects.findIndex((c) => c.id === project.id);
+      newProjects[updatedProjectIndex] = project;
+      this.setState({
+        projects: newProjects,
+      });
+
+      // API update
+      fetch(PROJECTS_API_URL, {
+        "method": "PATCH",
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": JSON.stringify({
+          id: project.id,
+          name: project.name,
+          clientId: project.clientId,
+          projectManager: project.projectManager,
+          email: project.email,
+          contactNumber: project.contactNumber,
+          billingAddress: project.billingAddress
+        })
+      }).then((r) => r.json())
+        .then((result) =>
+          alert(JSON.stringify(result)));
+    } else {
+      this.setState(
+        {
+          aProjectIsEdited: true,
+          editedProjectId: project.id,
+        }
+      );
+    }
+
+  }
+
   delete(e) {
-    fetch(API_URL + "/" + e, {
-      "method": "DELETE"
-    });
+    if (e === undefined) {
+      this.setState({
+        aClientIsEdited: false,
+        editedClientId: null,
+      })
+    } else {
+      // updating the array from which clients are rendered
+      const newClients = [...this.state.clients];
+      const deletedClientIndex = this.state.clients.findIndex((c) => c.id === e.id);
+      newClients.splice(deletedClientIndex, 1);
+      this.setState({
+        clients: newClients,
+      });
+
+      fetch(CLIENTS_API_URL + "/" + e.id, {
+        "method": "DELETE"
+      });
+    }
+  }
+
+  deleteProject(e) {
+    if (e === undefined) {
+      this.setState({
+        aProjectIsEdited: false,
+        editedProjectId: null,
+      })
+    } else {
+      // updating the array from which projects are rendered
+      const newProjects = [...this.state.projects];
+      const deletedProjectIndex = this.state.projects.findIndex((c) => c.id === e.id);
+      newProjects.splice(deletedProjectIndex, 1);
+      this.setState({
+        projects: newProjects,
+      });
+
+      fetch(PROJECTS_API_URL + "/" + e.id, {
+        "method": "DELETE"
+      });
+    }
   }
 
   render() {
     const { isLoaded } = this.state;
     const { aClientIsEdited } = this.state;
     const { editedClientId } = this.state;
+    const { aProjectIsEdited } = this.state;
+    const { editedProjectId } = this.state;
     return (
-      <div>
-        {!isLoaded && <p>Loading...</p>}
-        <table>
-          <thead>
-            <tr>
-              <th scope="col"> Name </th>
-              <th scope="col"> Country </th>
-              <th scope="col"> City </th>
-              <th scope="col"> Street name </th>
-              <th scope="col"> Street number </th>
-              <th scope="col"> Zip </th>
-              <th colSpan="2"> Actions </th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.clients.map((client) => (
-              <tr key={client.id}>
-                <ClientTableRow aClientIsEdited={aClientIsEdited} editedClientId={editedClientId} client={client} updateAction={(e) => this.update(e)} deleteAction={(e) => this.delete(e)} />
+      <div className="container-fluid">
+        <div className="row">
+          <div class="grid-container">
+            <div class="item1">
+              Header
+            </div>
+            <div class="item2">
+              <p>Clients</p>
+              <p>Project</p>
+            </div>
+            <div class="item3">
+              {!isLoaded && <p>Loading...</p>}
+              <table className="table table-striped table-bordered table-hover table-responsive">
+                <thead>
+                  <tr>
+                    <th scope="col"> Name </th>
+                    <th scope="col"> Country </th>
+                    <th scope="col"> City </th>
+                    <th scope="col"> Street name </th>
+                    <th scope="col"> Street number </th>
+                    <th scope="col"> Zip </th>
+                    <th colSpan="2"> Actions </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.clients.map((client) => (
+                    <ClientTableRow key={client.id} aClientIsEdited={aClientIsEdited} editedClientId={editedClientId} client={client} updateAction={(e) => this.update(e)} deleteAction={(e) => this.delete(e)} />
+                  ))}
+                </tbody>
+              </table>
+              <CreateClientForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+            </div>
+          </div>
+
+
+
+          {/* projekti su ispod */}
+
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            <thead>
+              <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Client </th>
+                <th scope="col"> Project manager </th>
+                <th scope="col"> Email </th>
+                <th scope="col"> Contact number </th>
+                <th scope="col"> Billing address </th>
+                <th colSpan="2"> Actions </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <CreateClientForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+            </thead>
+            <tbody>
+              {this.state.projects.map((project) => (
+                <ProjectTableRow key={project.id} aProjectIsEdited={aProjectIsEdited} editedProjectId={editedProjectId} project={project} clients={this.clients} updateAction={(e) => this.updateProject(e)} deleteAction={(e) => this.deleteProject(e)} />
+              ))}
+            </tbody>
+          </table>
+          <CreateProjectForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+        </div>
       </div>
     );
   }

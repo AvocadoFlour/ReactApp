@@ -2,10 +2,10 @@ package luminum.entities.DTO;
 
 public class ProjectReadDTO {
 
-    public ProjectReadDTO(long id, String name, String clientName, String projectManager, String email, Integer contactNumber, String billingAddress) {
+    public ProjectReadDTO(long id, String name, long clientId, String projectManager, String email, Integer contactNumber, String billingAddress) {
         this.id = id;
         this.name = name;
-        this.clientName = clientName;
+        this.clientId = clientId;
         this.projectManager = projectManager;
         this.email = email;
         this.contactNumber = contactNumber;
@@ -14,7 +14,7 @@ public class ProjectReadDTO {
 
     public long id;
     public String name;
-    public String clientName;
+    public long clientId;
     public String projectManager;
     public String email;
     public Integer contactNumber;
@@ -36,12 +36,12 @@ public class ProjectReadDTO {
         this.name = name;
     }
 
-    public String getClientName() {
-        return clientName;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getProjectManager() {

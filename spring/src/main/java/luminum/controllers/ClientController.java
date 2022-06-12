@@ -7,6 +7,7 @@ import luminum.database.ClientRepository;
 import luminum.entities.Client;
 import luminum.entities.DTO.ClientDTO;
 import luminum.exceptions.ClientNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,14 @@ public class ClientController {
     }
 
     @GetMapping()
-    List<ClientDTO> all() {
+    ResponseEntity<List<ClientDTO>> all() {
         System.out.println("GetAllClientsEndpointCalled");
-        return repository.findAll().stream().map(x -> getClientDTO(x)).collect(Collectors.toList());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("WhatIsThis", "ItsGettingAllClients");
+        List<ClientDTO> clientDtos = repository.findAll().stream().map(x -> getClientDTO(x)).collect(Collectors.toList());
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(clientDtos);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -40,11 +46,16 @@ public class ClientController {
     }
 
     @PatchMapping()
-    ClientDTO update(@RequestBody ClientDTO clientDTO) {
+    ResponseEntity<ClientDTO> update(@RequestBody ClientDTO clientDTO) {
+        // Setting headers https://www.baeldung.com/spring-response-header //
         System.out.println("UpdateClientsEndpointCalled");
-        System.out.println(clientDTO.toString());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("HeaderTest", "testVrijednost");
         Client client = getClientFromDTO(clientDTO);
-        return getClientDTO(repository.save(client));
+        ClientDTO clientDto = getClientDTO(repository.save(client));
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(clientDto);
     }
 
     //delete DELETE

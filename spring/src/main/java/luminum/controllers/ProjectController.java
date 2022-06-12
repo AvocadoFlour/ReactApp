@@ -58,7 +58,7 @@ public class ProjectController {
     // Data manipulation
 
     private ProjectReadDTO getProjectReadDTO(Project project) {
-        return new ProjectReadDTO(project.getId(), project.getName(), project.getClient().getName(), project.getProjectManager(), project.getEmail(), project.getContactNumber(), project.getBillingAddress());
+        return new ProjectReadDTO(project.getId(), project.getName(), project.getClient().getId(), project.getProjectManager(), project.getEmail(), project.getContactNumber(), project.getBillingAddress());
     }
 
     private Project getProjectFromProjectUpdateDTO(ProjectUpdateDTO projectUpdateDTO) {
