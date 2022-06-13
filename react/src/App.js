@@ -20,6 +20,7 @@ class App extends React.Component {
       projects: [],
       aProjectIsEdited: false,
       editedProjectId: null,
+      clientsAreShown: true
     };
   }
 
@@ -157,7 +158,7 @@ class App extends React.Component {
     if (e === undefined) {
       this.setState({
         aClientIsEdited: false,
-        editedClientId: null,
+        editedClientId: null
       })
     } else {
       // updating the array from which clients are rendered
@@ -201,38 +202,73 @@ class App extends React.Component {
     const { editedClientId } = this.state;
     const { aProjectIsEdited } = this.state;
     const { editedProjectId } = this.state;
+    const { clientsAreShown } = this.state;
     return (
       <div className="container-fluid">
         <div className="row">
           <div class="grid-container">
             <div class="item1">
-              Header
+              Projects and clients management
             </div>
             <div class="item2">
-              <p>Clients</p>
-              <p>Project</p>
+              <div id="container">
+                <button className='btn btn-light' style={{ height: "50px", width: "150px", fontSize: "20px" }} onClick={()=> this.setState({clientsAreShown: true})}>
+                  Clients
+                </button>
+                <button className='btn btn-light' style={{ height: "50px", width: "150px", fontSize: "20px" }} onClick={()=> this.setState({clientsAreShown: false})}>
+                  Project
+                </button>
+              </div>
             </div>
             <div class="item3">
               {!isLoaded && <p>Loading...</p>}
-              <table className="table table-striped table-bordered table-hover table-responsive">
-                <thead>
-                  <tr>
-                    <th scope="col"> Name </th>
-                    <th scope="col"> Country </th>
-                    <th scope="col"> City </th>
-                    <th scope="col"> Street name </th>
-                    <th scope="col"> Street number </th>
-                    <th scope="col"> Zip </th>
-                    <th colSpan="2"> Actions </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.clients.map((client) => (
-                    <ClientTableRow key={client.id} aClientIsEdited={aClientIsEdited} editedClientId={editedClientId} client={client} updateAction={(e) => this.update(e)} deleteAction={(e) => this.delete(e)} />
-                  ))}
-                </tbody>
-              </table>
-              <CreateClientForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+
+              {/* OVO JE UŽAS; POBOLJŠAJ */}
+              {clientsAreShown
+                ?
+                <>
+                  <table className="table table-striped table-bordered table-hover table-responsive">
+                    <thead>
+                      <tr>
+                        <th scope="col"> Name </th>
+                        <th scope="col"> Country </th>
+                        <th scope="col"> City </th>
+                        <th scope="col"> Street name </th>
+                        <th scope="col"> Street number </th>
+                        <th scope="col"> Zip </th>
+                        <th colSpan="2"> Actions </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.clients.map((client) => (
+                        <ClientTableRow key={client.id} aClientIsEdited={aClientIsEdited} editedClientId={editedClientId} client={client} updateAction={(e) => this.update(e)} deleteAction={(e) => this.delete(e)} />
+                      ))}
+                    </tbody>
+                  </table>
+                  <CreateClientForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+                </>
+                :
+                <>
+                  <table className="table table-striped table-bordered table-hover table-responsive">
+                    <thead>
+                      <tr>
+                        <th scope="col"> Name </th>
+                        <th scope="col"> Client </th>
+                        <th scope="col"> Project manager </th>
+                        <th scope="col"> Email </th>
+                        <th scope="col"> Contact number </th>
+                        <th scope="col"> Billing address </th>
+                        <th colSpan="2"> Actions </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.projects.map((project) => (
+                        <ProjectTableRow key={project.id} aProjectIsEdited={aProjectIsEdited} editedProjectId={editedProjectId} project={project} clients={this.clients} updateAction={(e) => this.updateProject(e)} deleteAction={(e) => this.deleteProject(e)} />
+                      ))}
+                    </tbody>
+                  </table>
+                  <CreateProjectForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} /></>
+              }
             </div>
           </div>
 
@@ -240,25 +276,7 @@ class App extends React.Component {
 
           {/* projekti su ispod */}
 
-          <table className="table table-striped table-bordered table-hover table-responsive">
-            <thead>
-              <tr>
-                <th scope="col"> Name </th>
-                <th scope="col"> Client </th>
-                <th scope="col"> Project manager </th>
-                <th scope="col"> Email </th>
-                <th scope="col"> Contact number </th>
-                <th scope="col"> Billing address </th>
-                <th colSpan="2"> Actions </th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.projects.map((project) => (
-                <ProjectTableRow key={project.id} aProjectIsEdited={aProjectIsEdited} editedProjectId={editedProjectId} project={project} clients={this.clients} updateAction={(e) => this.updateProject(e)} deleteAction={(e) => this.deleteProject(e)} />
-              ))}
-            </tbody>
-          </table>
-          <CreateProjectForm value={null} onSubmit={() => this.create()} onChange={(e) => this.handleFieldChange(e)} />
+
         </div>
       </div>
     );

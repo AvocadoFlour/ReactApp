@@ -203,12 +203,10 @@ export async function FetchClients() {
     .then(res => res.json());
 }
 
-export function 
-
 export function ClientsTable() {
   const [aClientIsEdited, setAClientIsEdited] = useState(false);
   const [editedClientId, setEditedClientId] = useState(-1);
-  const [clients, setClients] = userState(null);
+  const [clients, setClients] = useState(null);
 
 
 
