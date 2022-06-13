@@ -7,6 +7,10 @@ In order to run the back end use the latest version of the Oracle open JDK and r
 Implemented Swagger endpoint overview using [this guide](https://www.baeldung.com/spring-rest-openapi-documentation).
 > http://localhost:8080/api/swagger-ui.html
 
+___________________________________
+
+My own note-taking (not very important):
+
 Database console (in-memory so the project needs to be running):
 > http://localhost:8080/h2-console/
 > 
