@@ -1,7 +1,7 @@
 # ReactApp
 ReacJs FE with SpringBoot BE
 
-In order torun the front end you must have node 16.13.2 installed; Navigate to the "react" folder inside of a terminal(e.g. commant promt) and first run "npm install", then run "npm start".
+In order to run the front end you must have node 16.13.2 installed; Navigate to the "react" folder inside of a terminal(e.g. commant promt) and first run "npm install", then run "npm start".
 In order to run the back end use the latest version of the OracleOpen JDK and run the "ReactAppApplication" class.
 
 Implemented Swagger endpoint overview using [this guide](https://www.baeldung.com/spring-rest-openapi-documentation).
