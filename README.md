@@ -39,4 +39,4 @@ Package.json
 App.js
 > fetch('api/clients');
 
-Run the frontend by navigating to the frontend folder using a terminal/command prompt windows and inputting "npm start". Also, press enter after inputting that.
+Run the frontend by navigating to the frontend folder using a terminal/command prompt windows and inputting "npm start". Also, press enter after inputting that. Don't forget to breathe.
